@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Movies App</string>
+    <string name="sort_by_favorite">Favorite</string>
+    <string name="sort_by_popular">Popular</string>
+    <string name="sort_by_rating">Top rated</string>
+    <string name="title_movie_list">Movies</string>
+    <string name="title_movie_detail">Movie Detail</string>
+    <string name="movie_added_message">Removed from favorite</string>
+    <string name="movie_removed_message">Added into favorite</string>
+    <string name="baseUri">http://www.youtube.com/watch?v=</string>
+    <string name="error_message">error in loding data</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="favorite">Favorite</string>
+    <string name="popular">Popular</string>
+    <string name="error_eventlistener">must implement onSomeEventListener</string>
+    <string name="youtube_baseuri">http://www.youtube.com/watch?v=</string>
+    <string name="image_baseuri">http://image.tmdb.org/t/p/w342/</string>
+    <string name="temp">http://image.tmdb.org/t/p/w342/</string>
+    <string name="api_key">e1fbaf815c2a7bd1b7195615631b6a75</string>
+</resources>
