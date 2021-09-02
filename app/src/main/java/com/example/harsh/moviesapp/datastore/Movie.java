@@ -1,10 +1,10 @@
 package com.example.harsh.moviesapp.datastore;
-
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(tableName = "Movietable")
+@Entity(tableName = "Movie")
 public class Movie implements Parcelable {
 
     @SerializedName("vote_count")

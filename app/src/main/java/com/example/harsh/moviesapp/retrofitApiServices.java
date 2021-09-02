@@ -9,8 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface FetchDetailFromApi {
-    public String baseuri = "http://api.themoviedb.org/3/";
+public interface retrofitApiServices {
+    public String baseuri = "https://api.themoviedb.org/3/";
 
     @GET("discover/movie")
     Call<MovieDetails> getMovieSortByPopularity(@Query("api_key") String apikey, @Query("page") int page);

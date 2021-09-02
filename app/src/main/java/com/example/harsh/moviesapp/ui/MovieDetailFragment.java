@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,16 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.harsh.moviesapp.FetchDetailFromApi;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.harsh.moviesapp.retrofitApiServices;
 import com.example.harsh.moviesapp.R;
 import com.example.harsh.moviesapp.datastore.Movie;
 import com.example.harsh.moviesapp.datastore.MovieReviewDetail;
 import com.example.harsh.moviesapp.datastore.MovieReviewResult;
 import com.example.harsh.moviesapp.datastore.MovieVideoDetails;
 import com.example.harsh.moviesapp.datastore.MovieVideoResult;
-import com.example.harsh.moviesapp.moviedatabase.MoviesDatabase;
+import com.example.harsh.moviesapp.dataclients.localdbclient.MoviesDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieDetailFragment extends Fragment implements TrailerAdapter.ItemClickListener {
     public static final String ARG_ITEM_ID = "item_id";
-    private String IMAGEBASEURL = "http://image.tmdb.org/t/p/w342/";
+    private String IMAGEBASEURL = "https://image.tmdb.org/t/p/w342/";
     final String API_KEY = "e1fbaf815c2a7bd1b7195615631b6a75";
     private boolean like;
     private static boolean panalmode;
@@ -198,11 +198,11 @@ public class MovieDetailFragment extends Fragment implements TrailerAdapter.Item
 
     private void getMovieReview() {
         Retrofit retrofit1 = new Retrofit.Builder()
-                .baseUrl(FetchDetailFromApi.baseuri)
+                .baseUrl(retrofitApiServices.baseuri)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        FetchDetailFromApi api1 = retrofit1.create(FetchDetailFromApi.class);
+        retrofitApiServices api1 = retrofit1.create(retrofitApiServices.class);
         Call<MovieReviewDetail> call = api1.getMovieReview(movie.getId(), API_KEY);
 
         call.enqueue(new Callback<MovieReviewDetail>() {
@@ -221,11 +221,11 @@ public class MovieDetailFragment extends Fragment implements TrailerAdapter.Item
 
     private void getVideoLink() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(FetchDetailFromApi.baseuri)
+                .baseUrl(retrofitApiServices.baseuri)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        FetchDetailFromApi api = retrofit.create(FetchDetailFromApi.class);
+        retrofitApiServices api = retrofit.create(retrofitApiServices.class);
         Call<MovieVideoDetails> call = api.getMoviesTrailer(movie.getId(), API_KEY);
 
         call.enqueue(new Callback<MovieVideoDetails>() {

@@ -10,7 +10,7 @@
     android:showDividers="middle"
     tools:context=".ui.MovieListActivity">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/recyclerViewTasks"
         android:layout_width="@dimen/item_width"

@@ -1,13 +1,9 @@
 package com.example.harsh.moviesapp;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.harsh.moviesapp.moviedatabase.MoviesDatabase;
+import com.example.harsh.moviesapp.dataclients.localdbclient.MoviesDatabase;
 import com.example.harsh.moviesapp.datastore.Movie;
 import com.example.harsh.moviesapp.datastore.MovieDetails;
 import com.example.harsh.moviesapp.ui.MovieListActivity;
@@ -23,6 +19,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.harsh.moviesapp.ui.MovieListActivity.sortby;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class MovieViewModel extends AndroidViewModel {
 
@@ -48,11 +48,11 @@ public class MovieViewModel extends AndroidViewModel {
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(FetchDetailFromApi.baseuri)
+                    .baseUrl(retrofitApiServices.baseuri)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            FetchDetailFromApi api = retrofit.create(FetchDetailFromApi.class);
+            retrofitApiServices api = retrofit.create(retrofitApiServices.class);
             Call<MovieDetails> call = api.getMovieSortByPopularity(MovieListActivity.API_KEY, MovieListActivity.pageno++);
 
             call.enqueue(new Callback<MovieDetails>() {

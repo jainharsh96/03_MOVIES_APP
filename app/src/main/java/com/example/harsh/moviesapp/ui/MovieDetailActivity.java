@@ -2,21 +2,22 @@ package com.example.harsh.moviesapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.harsh.moviesapp.AppBarStateChangeListener;
-import com.example.harsh.moviesapp.FetchDetailFromApi;
+import com.example.harsh.moviesapp.retrofitApiServices;
 import com.example.harsh.moviesapp.R;
 import com.example.harsh.moviesapp.datastore.Movie;
 import com.example.harsh.moviesapp.datastore.MovieVideoDetails;
-import com.example.harsh.moviesapp.moviedatabase.MoviesDatabase;
+import com.example.harsh.moviesapp.dataclients.localdbclient.MoviesDatabase;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     static boolean mTwoPanal;
     static String TRAILER_KEY = "";
     private FloatingActionButton fab = null;
-    private String IMAGEBASEURL = "http://image.tmdb.org/t/p/w342/";
+    private String IMAGEBASEURL = "https://image.tmdb.org/t/p/w342/";
     private String SHARE_MOVIE = "";
 
     @Override
@@ -111,7 +112,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(MovieDetailFragment.ARG_ITEM_ID, movie);
-        bundle.putBoolean("mode", mTwoPanal);
         MovieDetailFragment fragment = new MovieDetailFragment();
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
@@ -134,11 +134,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     private void getVideoLink() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(FetchDetailFromApi.baseuri)
+                .baseUrl(retrofitApiServices.baseuri)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        FetchDetailFromApi api = retrofit.create(FetchDetailFromApi.class);
+        retrofitApiServices api = retrofit.create(retrofitApiServices.class);
         Call<MovieVideoDetails> call = api.getMoviesTrailer(movie.getId(), MovieListActivity.API_KEY);
 
         call.enqueue(new Callback<MovieVideoDetails>() {

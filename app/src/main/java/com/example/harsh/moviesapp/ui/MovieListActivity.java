@@ -1,34 +1,31 @@
 package com.example.harsh.moviesapp.ui;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
-import com.example.harsh.moviesapp.FetchDetailFromApi;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.harsh.moviesapp.retrofitApiServices;
 import com.example.harsh.moviesapp.EndlessRecyclerViewScrollListener;
 import com.example.harsh.moviesapp.MovieViewModel;
 import com.example.harsh.moviesapp.R;
-import com.example.harsh.moviesapp.moviedatabase.MoviesDatabase;
+import com.example.harsh.moviesapp.dataclients.localdbclient.MoviesDatabase;
 import com.example.harsh.moviesapp.datastore.Movie;
 import com.example.harsh.moviesapp.datastore.MovieDetails;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
-import io.fabric.sdk.android.Fabric;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -56,7 +53,6 @@ public class MovieListActivity extends AppCompatActivity implements MovieAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
 
@@ -136,11 +132,11 @@ public class MovieListActivity extends AppCompatActivity implements MovieAdapter
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(FetchDetailFromApi.baseuri)
+                .baseUrl(retrofitApiServices.baseuri)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        FetchDetailFromApi api = retrofit.create(FetchDetailFromApi.class);
+        retrofitApiServices api = retrofit.create(retrofitApiServices.class);
         Call<MovieDetails> call;
         switch (sortby) {
             case R.id.Sort_by_rating:
